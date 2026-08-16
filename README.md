@@ -52,13 +52,13 @@ Produces: Executive Summary; Current Risk Posture; Attack Chains; Historical Tre
 
 ## System Architecture
 
-<p align="center"><strong>Figure 1 — Published Airia Multi-Stage Container Security Workflow v5.00</strong></p>
-
 <p align="center">
   <a href="https://imgur.com/OoorMrF">
     <img src="https://i.imgur.com/OoorMrF.png" alt="Airia workflow with Input, Claude Haiku 4.5 Router, five AI agents, Python Docker scanner, user-specific memory, and Output" width="100%">
   </a>
 </p>
+
+<p align="center"><strong>Figure 1 — Container Security Agent Workflow</strong></p>
 
 ### Flow-by-Flow Explanation
 
