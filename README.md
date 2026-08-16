@@ -90,71 +90,25 @@ Produces: Executive Summary; Current Risk Posture; Attack Chains; Historical Tre
 
 > **Integration boundary:** The supplied workflow image and code confirm direct use of Airia, the listed AI models, memory, Python, and the Docker SDK code node. Trivy/Grype results, SBOMs, Docker/Kubernetes inspection output, and natural-language requests are user-provided inputs. Falco, Tracee, Tetragon, Sysdig, Cosign, in-toto, SLSA, Notation, OPA, Kyverno, AppArmor, SELinux, and Seccomp are subjects of generated recommendations or configuration—not confirmed direct integrations.
 
-## Setup
+## Setup and Testing
 
-The published workflow runs in Airia. The commands below help users generate inputs to paste into the workflow and test the supplied Python scanner logic locally. Installing these tools on a user's machine does not automatically connect that machine or its Docker Engine to Airia.
+The complete workflow lives in Airia. There is no application repository to clone or local service to start.
 
-### Clone and verify Docker
+1. **[Import and open the workflow in Airia](https://community.airia.ai/import-agent/ungc8ks9vj2JtFiXo7VOlCsBd3GCC3ghgW9TOjSJ48w).**
+2. Choose one of the supported input options below.
+3. Paste the input or prompt into the agent.
+4. Review and validate the generated analysis before applying remediation.
 
-```bash
-git clone https://github.com/ritvikindupuri/ContainerSecAgent.git
-cd ContainerSecAgent
-docker version
-docker info
-docker run --rm hello-world
-```
+Trivy, Grype, Syft, Docker, and Kubernetes are optional local tools used only to generate input for the workflow. They are not required for prompts that use pasted content or natural-language descriptions.
 
-### Test the Python Docker scanner locally
-
-Linux/macOS:
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip docker
-export DOCKER_HOST='unix:///var/run/docker.sock'
-python -c 'import docker; c=docker.from_env(); print(c.ping()); print(c.version()["Version"])'
-```
-
-Windows PowerShell:
-
-```powershell
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip docker
-python -c "import docker; c=docker.from_env(); print(c.ping()); print(c.version()['Version'])"
-```
-
-> The Python node can scan only a Docker Engine reachable from the environment where that node executes. Docker socket access is effectively administrative; use it only in a trusted environment and never expose an unauthenticated Docker TCP endpoint.
-
-### Trivy
-
-```bash
-trivy --version
-trivy image nginx:1.21
-trivy image nginx:1.21 --format json --output trivy-results.json
-trivy image --format cyclonedx --output sbom.cdx.json nginx:1.21
-```
-
-### Syft and Grype
-
-```bash
-curl -sSfL https://get.anchore.io/syft | sh -s -- -b "$HOME/.local/bin"
-curl -sSfL https://get.anchore.io/grype | sh -s -- -b "$HOME/.local/bin"
-export PATH="$HOME/.local/bin:$PATH"
-syft nginx:latest -o json=sbom.syft.json
-syft nginx:latest -o cyclonedx-json=sbom.cdx.json
-syft nginx:latest -o spdx-json=sbom.spdx.json
-grype nginx:1.21 -o json > grype-results.json
-```
-
-Review downloaded installation scripts before running them in production.
-
-## All Input Options and Testing
+## All Input Options for the Container Security Agent
 
 ### 1. Dockerfile Analysis
 
+**What to input:**
+
 ```dockerfile
+# Just paste your Dockerfile
 FROM ubuntu:latest
 RUN apt-get update && apt-get install -y curl
 USER root
@@ -162,109 +116,219 @@ EXPOSE 80
 CMD ["/bin/bash"]
 ```
 
-Returns static analysis, violations, and a one-click secure Dockerfile.
+**What the agent does:**
+
+- Static security analysis
+- Best-practice violation detection
+- One-click remediation with a fixed Dockerfile
 
 ### 2. CVE Scan Results (Trivy/Grype)
 
-```bash
-trivy image nginx:1.21
-trivy image nginx:1.21 --format json
-```
+**What to input:**
 
 ```text
-I scanned nginx:1.21 and got 247 vulnerabilities, 12 CRITICAL, 45 HIGH. Which five should I fix first?
+# Paste output from:
+trivy image nginx:1.21
+
+# OR paste JSON from:
+trivy image nginx:1.21 --format json
+
+# OR just describe:
+"I scanned nginx:1.21 and got 247 vulnerabilities, 12 CRITICAL, 45 HIGH"
 ```
 
-Returns AI triage, exploitability scoring, attack chains, and exact remediation.
+**What the agent does:**
+
+- AI-powered triage showing which five CVEs to fix first
+- Exploitability scoring
+- Attack-chain correlation
+- Exact remediation steps
 
 ### 3. SBOM Files — New in v4.0
 
-```bash
-syft nginx:latest -o json
-trivy image --format cyclonedx nginx:latest
-docker sbom nginx:latest
-```
+**What to input:**
 
 ```text
-Analyze this SBOM for vulnerable and transitive dependencies, dependency confusion, typosquatting, license risk, and missing provenance. Map components to CVEs and provide verification commands: [paste SBOM]
+# Paste an SBOM generated with:
+syft nginx:latest -o json
+
+# OR:
+trivy sbom nginx:latest
+
+# OR:
+docker sbom nginx:latest
+
+# Supported formats include SPDX, CycloneDX, and Syft JSON.
 ```
+
+**What the agent does:**
+
+- Supply-chain risk analysis
+- License-compliance checking
+- Dependency-confusion detection
+- Provenance-verification guidance
+- Component-to-CVE mapping
 
 ### 4. Runtime Configuration — New in v4.0
 
-```bash
+**What to input:**
+
+```text
+# Paste output from:
 docker inspect my-container
+
+# OR:
 kubectl get pod my-pod -o yaml
+
+# OR describe:
+"My container runs as root, has privileged mode, and mounts /var/run/docker.sock"
 ```
+
+**What the agent does:**
+
+- Runtime security assessment
+- Falco-rule generation
+- Privilege-escalation risk analysis
+- AppArmor, SELinux, and Seccomp policy recommendations
+
+### 5. CI/CD Pipeline Requests — New in v4.0
+
+**What to input:**
 
 ```text
-My container runs as root, has privileged mode, and mounts /var/run/docker.sock. Assess the attack paths and give me exact hardening changes.
+"Create a GitHub Actions workflow for container security scanning"
+
+"How do I add Trivy to my GitLab CI pipeline?"
+
+"Generate a Jenkins pipeline that blocks builds with CRITICAL CVEs"
+
+"I need a complete CI/CD security setup for Azure DevOps"
 ```
 
-Returns runtime assessment, Falco rules, privilege-escalation analysis, and AppArmor/SELinux/Seccomp guidance.
+**What the agent does:**
 
-### 5. CI/CD Requests — New in v4.0
-
-```text
-Create a GitHub Actions workflow for container security scanning.
-How do I add Trivy to my GitLab CI pipeline?
-Generate a Jenkins pipeline that blocks builds with CRITICAL CVEs.
-I need a complete CI/CD security setup for Azure DevOps.
-```
-
-Returns copy-pastable configuration, security gates, remediation automation, and policy-as-code.
+- Copy-pastable pipeline YAML or configuration
+- Security gates and thresholds
+- Automated-remediation setup
+- Policy-as-code examples
 
 ### 6. Compliance and Best Practices
 
+**What to input:**
+
 ```text
-Check my setup against the CIS Docker Benchmark.
-What are the NIST container security requirements?
-Is my Kubernetes deployment PCI-DSS compliant?
-Generate a security checklist for production containers.
+"Check my setup against CIS Docker Benchmark"
+
+"What are the NIST container security requirements?"
+
+"Is my Kubernetes deployment PCI-DSS compliant?"
+
+"Generate a security checklist for production containers"
 ```
+
+**What the agent does:**
+
+- Compliance gap analysis
+- Benchmark mapping
+- Remediation roadmap
+- Policy templates
 
 ### 7. Natural-Language Queries
 
-```text
-Are any of my images vulnerable to Log4Shell?
-What's the fastest way to scan 100 container images?
-How do I detect container escape attempts in production?
-Should I be worried about the latest nginx CVE?
-Compare Trivy vs Grype vs Snyk—which should I use?
-```
-
-### 8. Mixed and Complex Scenarios
+**What to input:**
 
 ```text
-Here's my Dockerfile: [paste]. Here's my Trivy scan: [paste]. Here's my runtime configuration: [paste]. Give me a complete cross-layer security assessment, attack paths, remediation plan, and executive summary.
+"Are any of my images vulnerable to Log4Shell?"
+
+"What's the fastest way to scan 100 container images?"
+
+"How do I detect container escape attempts in production?"
+
+"Should I be worried about the latest nginx CVE?"
+
+"Compare Trivy vs Grype vs Snyk - which should I use?"
 ```
 
-### 9. Historical Analysis
+**What the agent does:**
+
+- Research and recommendations
+- Tool comparisons
+- Threat-intelligence guidance
+- Strategic guidance
+
+### 8. Mixed or Complex Scenarios
+
+**What to input:**
 
 ```text
-How has my security posture changed over the last month?
-Show me trends in my vulnerability counts.
-Am I getting better or worse at container security?
+"Here's my Dockerfile [paste], my Trivy scan [paste], and my runtime config [paste].
+Give me a complete security assessment."
 ```
 
-Memory provides comparative metrics when history exists; otherwise the report establishes a baseline.
+**What the agent does:**
 
-### 10. Runtime Monitoring — New in v4.0
+- Cross-layer correlation
+- Attack-path visualization
+- Comprehensive remediation planning
+- Executive summary with business impact
+
+### 9. Historical Analysis — Uses Memory
+
+**What to input:**
 
 ```text
-Generate Falco rules for my production environment.
-How do I detect suspicious syscalls in containers?
-Set up eBPF monitoring for container escapes.
-Create AppArmor and SELinux profiles for my app.
+"How has my security posture changed over the last month?"
+
+"Show me trends in my vulnerability counts"
+
+"Am I getting better or worse at container security?"
 ```
+
+**What the agent does:**
+
+- Trend analysis using available memory
+- Comparative insights
+- Pattern recognition
+
+If no prior scan data is available, the report establishes a baseline instead of inventing a trend.
+
+### 10. Runtime Monitoring Setup — New in v4.0
+
+**What to input:**
+
+```text
+"Generate Falco rules for my production environment"
+
+"How do I detect suspicious syscalls in containers?"
+
+"Set up eBPF monitoring for container escapes"
+
+"Create AppArmor/SELinux profiles for my app"
+```
+
+**What the agent does:**
+
+- Custom Falco rules
+- Falco, Tracee, and Tetragon recommendations
+- Security-policy generation
+- Deployment guidance
 
 ## Recommended Testing Workflow
 
-1. Paste a Dockerfile and inspect the secure rewrite.
-2. Run `trivy image nginx:latest`, paste it, and review AI triage.
-3. Run `syft nginx:latest -o json`, paste it, and review supply-chain analysis.
-4. Ask: `Create a GitHub Actions workflow for container security scanning.`
-5. Paste `docker inspect` output and review the runtime assessment.
-6. Combine Dockerfile + Trivy + SBOM + runtime data for a complete attack-path and executive report.
+### Start Simple
+
+1. Paste a Dockerfile → see static analysis.
+2. Run `trivy image nginx:latest` → paste the results → see AI triage.
+
+### Then Advanced
+
+3. Generate an SBOM with `syft nginx:latest -o json` → paste it → see supply-chain analysis.
+4. Ask: `Create a GitHub Actions security workflow` → receive copy-pastable YAML.
+5. Paste `docker inspect` output → receive a runtime security assessment.
+
+### Go Complex
+
+6. Combine a Dockerfile, Trivy scan, and runtime configuration → receive complete attack-path analysis.
 
 ## Quick Examples
 
