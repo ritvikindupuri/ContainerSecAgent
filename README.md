@@ -2,13 +2,13 @@
 
 > **Multi-agent container security analysis, one-click remediation, contextual CVE triage, and executive-ready reporting.**
 
-Enterprise Container Security Agent is a published Airia workflow that transforms Dockerfiles, vulnerability scans, SBOMs, runtime configuration, compliance questions, and CI/CD requirements into prioritized, copy-pastable security guidance. A Claude Haiku 4.5 router selects a specialist path, five model-backed agents analyze and correlate evidence, an optional Python node attempts to inventory a Docker Engine reachable from its runtime, and user-specific memory supports trend and drift analysis when prior scan data is available.
+Enterprise Container Security Agent is a published Airia AI workflow that transforms Dockerfiles, vulnerability scans, SBOMs, runtime configuration, compliance questions, and CI/CD requirements into prioritized, copy-pastable security guidance. A Claude Haiku 4.5 router selects a specialist path, five model-backed agents analyze and correlate evidence, an optional Python node attempts to inventory a Docker Engine reachable from its runtime, and user-specific memory supports trend and drift analysis when prior scan data is available.
 
 Version **5.00** is the current published workflow and includes the SBOM, supply-chain, runtime-monitoring, and CI/CD capabilities introduced in **v4.0**.
 
 ## Try the Workflow
 
-Want to test the published agent? **[Import and try Enterprise Container Security Agent in the Airia Community](https://community.airia.ai/import-agent/ungc8ks9vj2JtFiXo7VOlCsBd3GCC3ghgW9TOjSJ48w)**.
+Want to test the published agent? **[Import and try Enterprise Container Security Agent in the Airia AI Community](https://community.airia.ai/import-agent/ungc8ks9vj2JtFiXo7VOlCsBd3GCC3ghgW9TOjSJ48w)**.
 
 > [View a complete sample report generated from a real Trivy scan](SAMPLE_OUTPUT_FROM_AGENT.md)
 
@@ -54,7 +54,7 @@ Produces: Executive Summary; Current Risk Posture; Attack Chains; Historical Tre
 
 <p align="center">
   <a href="https://imgur.com/OoorMrF">
-    <img src="https://i.imgur.com/OoorMrF.png" alt="Airia workflow with Input, Claude Haiku 4.5 Router, five AI agents, Python Docker scanner, user-specific memory, and Output" width="100%">
+    <img src="https://i.imgur.com/OoorMrF.png" alt="Airia AI workflow with Input, Claude Haiku 4.5 Router, five AI agents, Python Docker scanner, user-specific memory, and Output" width="100%">
   </a>
 </p>
 
@@ -77,7 +77,7 @@ Produces: Executive Summary; Current Risk Posture; Attack Chains; Historical Tre
 
 | Layer | Technology |
 |---|---|
-| Orchestration | Airia |
+| Orchestration | Airia AI |
 | Models | Claude Haiku 4.5 and GPT-4.1 |
 | Code execution | Python 3 |
 | Optional live Docker inventory | Docker SDK for Python using `docker.from_env()` against an engine reachable from the code runtime |
@@ -86,15 +86,14 @@ Produces: Executive Summary; Current Risk Posture; Attack Chains; Historical Tre
 | Provenance | Cosign, in-toto, SLSA, Notation guidance |
 | Runtime-monitoring output | Recommendations and generated guidance for Falco, Tracee, Tetragon, Sysdig, and eBPF |
 | Policy output | Generated examples and recommendations for OPA/Rego, Kyverno, AppArmor, SELinux, and Seccomp |
-| History | Airia user-specific memory |
+| History | Airia AI user-specific memory |
 
-> **Integration boundary:** The supplied workflow image and code confirm direct use of Airia, the listed AI models, memory, Python, and the Docker SDK code node. Trivy/Grype results, SBOMs, Docker/Kubernetes inspection output, and natural-language requests are user-provided inputs. Falco, Tracee, Tetragon, Sysdig, Cosign, in-toto, SLSA, Notation, OPA, Kyverno, AppArmor, SELinux, and Seccomp are subjects of generated recommendations or configuration—not confirmed direct integrations.
 
 ## Setup and Testing
 
-The complete workflow lives in Airia. There is no application repository to clone or local service to start.
+The complete workflow lives in Airia AI. There is no application repository to clone or local service to start.
 
-1. **[Import and open the workflow in Airia](https://community.airia.ai/import-agent/ungc8ks9vj2JtFiXo7VOlCsBd3GCC3ghgW9TOjSJ48w).**
+1. **[Import and open the workflow in Airia AI](https://community.airia.ai/import-agent/ungc8ks9vj2JtFiXo7VOlCsBd3GCC3ghgW9TOjSJ48w).**
 2. Choose one of the supported input options below.
 3. Paste the input or prompt into the agent.
 4. Review and validate the generated analysis before applying remediation.
