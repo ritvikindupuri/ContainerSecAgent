@@ -1,12 +1,12 @@
-# Enterprise Container Security Agent
+# ContainerGuard AI
 
 > **Multi-agent container security analysis, ready-to-apply remediation, contextual CVE triage, and executive-ready reporting.**
 
-Enterprise Container Security Agent is a published Airia AI workflow that transforms Dockerfiles, vulnerability scans, SBOMs, runtime configuration, compliance questions, and CI/CD requirements into prioritized, copy-pastable security guidance. A Claude Haiku 4.5 router selects a specialist path, five model-backed agents analyze and correlate evidence, a built-in Python code node inventories a Docker Engine reachable from its runtime, and user-specific memory supports trend and drift analysis when prior scan data is available.
+ContainerGuard AI is a published Airia AI workflow that transforms Dockerfiles, vulnerability scans, SBOMs, runtime configuration, compliance questions, and CI/CD requirements into prioritized, copy-pastable security guidance. A Claude Haiku 4.5 router selects a specialist path, five model-backed agents analyze and correlate evidence, a built-in Python code node inventories a Docker Engine reachable from its runtime, and user-specific memory supports trend and drift analysis when prior scan data is available.
 
 ## Try the Workflow
 
-Want to test the published agent? **[Import and try Enterprise Container Security Agent in the Airia AI Community](https://community.airia.ai/import-agent/ungc8ks9vj2JtFiXo7VOlCsBd3GCC3ghgW9TOjSJ48w)**.
+Want to test the published agent? **[Import and try ContainerGuard AI in the Airia AI Community](https://community.airia.ai/import-agent/ungc8ks9vj2JtFiXo7VOlCsBd3GCC3ghgW9TOjSJ48w)**.
 
 > [View a complete sample report generated from a real Trivy scan](SAMPLE_OUTPUT_FROM_AGENT.md)
 
