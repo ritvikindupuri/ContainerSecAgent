@@ -416,6 +416,10 @@ Generate Falco rules to detect container privilege escalation.
 I run nginx:1.14 as root with host network mode. What are my risks?
 ```
 
+## Python Scanner Code
+
+The documented source for the Python Scripts node is available at [docker_engine_scanner.py](docker_engine_scanner.py). It is included for transparency; the node is already part of the Airia AI workflow, so users do not need to clone this repository or run the file to use the agent.
+
 ## Python Scanner Output
 
 ```json
