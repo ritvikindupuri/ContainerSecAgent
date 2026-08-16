@@ -6,6 +6,10 @@ Enterprise Container Security Agent is a published Airia workflow that transform
 
 Version **5.00** is the current published workflow and includes the SBOM, supply-chain, runtime-monitoring, and CI/CD capabilities introduced in **v4.0**.
 
+## Try the Workflow
+
+Want to test the published agent? **[Import and try Enterprise Container Security Agent in the Airia Community](https://community.airia.ai/import-agent/ungc8ks9vj2JtFiXo7VOlCsBd3GCC3ghgW9TOjSJ48w)**.
+
 > [View a complete sample report generated from a real Trivy scan](SAMPLE_OUTPUT_FROM_AGENT.md)
 
 ## Key Features
