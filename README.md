@@ -2,7 +2,7 @@
 
 > **Multi-agent container security analysis, ready-to-apply remediation, contextual CVE triage, and executive-ready reporting.**
 
-ContainerGuard AI is a published Airia AI workflow that transforms Dockerfiles, vulnerability scans, SBOMs, runtime configuration, compliance questions, and CI/CD requirements into prioritized, copy-pastable security guidance. A Claude Haiku 4.5 router selects a specialist path, five model-backed agents analyze and correlate evidence, a built-in Python code node inventories a Docker Engine reachable from its runtime, and user-specific memory supports trend and drift analysis when prior scan data is available.
+ContainerGuard AI was built and is orchestrated end-to-end in Airia AI. Airia AI coordinates the workflow's input, Claude Haiku 4.5 router, five model-backed specialist agents, built-in Python Docker Engine inventory node, user-specific memory, and final output. Together, these nodes transform Dockerfiles, vulnerability scans, SBOMs, runtime configuration, compliance questions, and CI/CD requirements into prioritized, copy-pastable security guidance. Historical trend and drift analysis is included when prior scan data is available.
 
 ## Try the Workflow
 
