@@ -1,10 +1,8 @@
-# Enterprise Container Security Agent v5.00
+# Enterprise Container Security Agent
 
-> **Multi-agent container security analysis, one-click remediation, contextual CVE triage, and executive-ready reporting.**
+> **Multi-agent container security analysis, ready-to-apply remediation, contextual CVE triage, and executive-ready reporting.**
 
 Enterprise Container Security Agent is a published Airia AI workflow that transforms Dockerfiles, vulnerability scans, SBOMs, runtime configuration, compliance questions, and CI/CD requirements into prioritized, copy-pastable security guidance. A Claude Haiku 4.5 router selects a specialist path, five model-backed agents analyze and correlate evidence, a built-in Python code node inventories a Docker Engine reachable from its runtime, and user-specific memory supports trend and drift analysis when prior scan data is available.
-
-Version **5.00** is the current published workflow and includes the SBOM, supply-chain, runtime-monitoring, and CI/CD capabilities introduced in **v4.0**.
 
 ## Try the Workflow
 
@@ -32,7 +30,7 @@ Want to test the published agent? **[Import and try Enterprise Container Securit
 | Component | Model | Role |
 |---|---|---|
 | Router | Claude Haiku 4.5 | Classifies the request and selects one of five routes |
-| Agent 1 | Claude Haiku 4.5 | Dockerfile static analysis and one-click secure remediation |
+| Agent 1 | Claude Haiku 4.5 | Dockerfile static analysis and ready-to-apply secure remediation |
 | Agent 2 | GPT-4.1 | Enhanced CVE Hunter, SBOM/supply chain, runtime, and CI/CD |
 | Agent 3 | GPT-4.1 | Focused CVE triage, attack paths, and remediation |
 | Agent 4 | Claude Haiku 4.5 | Parallel focused CVE analysis and corroboration |
@@ -44,7 +42,7 @@ Returns a complete secure replacement in a strict five-part response: annotated 
 
 ### Agents 2–4 — CVE Hunters
 
-Normalize CVEs and prioritize effective risk using exploitability, impact, container context, and business criticality. They identify attack chains and linchpin vulnerabilities, then provide exact upgrades, Dockerfile changes, commands, short-term mitigations, long-term fixes, and 1-hour/24-hour/7-day plans. Agent 2 adds v4.0 SBOM, supply-chain, runtime, and CI/CD capabilities. Agents 3 and 4 perform focused parallel analysis with different models.
+Normalize CVEs and prioritize effective risk using exploitability, impact, container context, and business criticality. They identify attack chains and linchpin vulnerabilities, then provide exact upgrades, Dockerfile changes, commands, short-term mitigations, long-term fixes, and 1-hour/24-hour/7-day plans. Agent 2 provides SBOM, supply-chain, runtime-monitoring, and CI/CD capabilities. Agents 3 and 4 perform focused parallel analysis with different models.
 
 ### Agent 5 — Security Report Aggregator
 
@@ -196,7 +194,7 @@ CMD ["/bin/bash"]
 
 - Static security analysis
 - Best-practice violation detection
-- One-click remediation with a fixed Dockerfile
+- Copy-pastable remediation with a fixed Dockerfile and exact build commands
 
 ### 2. CVE Scan Results (Trivy/Grype)
 
@@ -220,7 +218,7 @@ trivy image nginx:1.21 --format json
 - Attack-chain correlation
 - Exact remediation steps
 
-### 3. SBOM Files — New in v4.0
+### 3. SBOM Files
 
 **What to input:**
 
@@ -245,7 +243,7 @@ docker sbom nginx:latest
 - Provenance-verification guidance
 - Component-to-CVE mapping
 
-### 4. Runtime Configuration — New in v4.0
+### 4. Runtime Configuration
 
 **What to input:**
 
@@ -267,7 +265,7 @@ kubectl get pod my-pod -o yaml
 - Privilege-escalation risk analysis
 - AppArmor, SELinux, and Seccomp policy recommendations
 
-### 5. CI/CD Pipeline Requests — New in v4.0
+### 5. CI/CD Pipeline Requests
 
 **What to input:**
 
@@ -368,7 +366,7 @@ Give me a complete security assessment."
 
 If no prior scan data is available, the report establishes a baseline instead of inventing a trend.
 
-### 10. Runtime Monitoring Setup — New in v4.0
+### 10. Runtime Monitoring Setup
 
 **What to input:**
 
