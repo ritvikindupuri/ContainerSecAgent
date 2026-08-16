@@ -100,6 +100,83 @@ The complete workflow lives in Airia AI. There is no application repository to c
 
 Trivy, Grype, Syft, Docker, and Kubernetes are optional local tools used only to generate input for the workflow. They are not required for prompts that use pasted content or natural-language descriptions.
 
+### Optional: Install Trivy to Generate CVE Scan Input
+
+Skip this section if you already have Trivy output or plan to describe the vulnerability counts in plain language.
+
+#### macOS
+
+The official Homebrew installation is:
+
+```bash
+brew install trivy
+trivy --version
+```
+
+If `brew` is not installed, install Homebrew from [brew.sh](https://brew.sh/) first, then run the commands above.
+
+Generate text output to paste into Airia AI:
+
+```bash
+trivy image nginx:1.21
+```
+
+Generate JSON output to paste or upload:
+
+```bash
+trivy image nginx:1.21 --format json --output trivy-results.json
+```
+
+#### Windows PowerShell
+
+Open **PowerShell** as your normal user and run this complete block. It downloads the latest official 64-bit Windows release of Trivy, extracts it under your user profile, adds that folder to your user PATH, and verifies the installation.
+
+```powershell
+$release = Invoke-RestMethod "https://api.github.com/repos/aquasecurity/trivy/releases/latest"
+$asset = $release.assets |
+  Where-Object { $_.name -match "Windows-64bit\.zip$" } |
+  Select-Object -First 1
+
+if (-not $asset) {
+  throw "The latest Trivy release does not contain a Windows-64bit ZIP asset."
+}
+
+$installDir = Join-Path $env:LOCALAPPDATA "Programs\Trivy"
+$zipPath = Join-Path $env:TEMP "trivy-windows-64bit.zip"
+
+New-Item -ItemType Directory -Force -Path $installDir | Out-Null
+Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $zipPath
+Expand-Archive -Path $zipPath -DestinationPath $installDir -Force
+Remove-Item $zipPath
+
+$userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+$pathEntries = @($userPath -split ";" | Where-Object { $_ })
+
+if ($pathEntries -notcontains $installDir) {
+  $newUserPath = ($pathEntries + $installDir) -join ";"
+  [Environment]::SetEnvironmentVariable("Path", $newUserPath, "User")
+}
+
+$env:Path = "$env:Path;$installDir"
+trivy --version
+```
+
+Generate text output:
+
+```powershell
+trivy image nginx:1.21
+```
+
+Generate JSON output:
+
+```powershell
+trivy image nginx:1.21 --format json --output trivy-results.json
+```
+
+After the scan finishes, open the Airia AI workflow and either paste the terminal output, provide the JSON results, or describe the vulnerability totals.
+
+For other operating systems and installation methods, use the [official Trivy installation guide](https://www.trivy.dev/docs/latest/getting-started/installation/).
+
 ## All Input Options for the Container Security Agent
 
 ### 1. Dockerfile Analysis
